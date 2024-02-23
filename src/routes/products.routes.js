@@ -7,4 +7,4 @@ router.post('/',insertOne);
 
 router.post("/:barcode", updateOne)
 router.get("/delete/:barcode", deleteOne)
-export default router;
+export default router; 
