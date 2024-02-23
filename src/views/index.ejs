@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Api-Groceries</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+    <div data-role="page" id="one">
+
+        <div data-role="header">
+            <h1>Api-Groceries</h1>
+        </div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            <form action="/api/products/" method="POST">
+
+                <label for="txt_codigo_barras">Codigo de barras:</label>
+                <input type="text" name="barcode" id="txt_codigo_barras" placeholder="Código de barras">
+
+                <label for="txt_description">Descripción:</label>
+                <input type="text" name="description" id="txt_description" placeholder="Descripción">
+
+                <label for="txt_brand">Marca:</label>
+                <input type="text" name="brand" id="txt_brand" placeholder="Marca">
+
+                <label for="txt_price">Precio:</label>
+                <input type="text" name="price" id="txt_price" placeholder="Precio">
+
+                <label for="txt_cost">Costo:</label>
+                <input type="text" name="cost" id="txt_cost" placeholder="Costo">
+
+                <label for="txt_stock">Stock</label>
+                <input type="text" name="stock" id="txt_stock" placeholder="Stock">
+
+                <label for="txt_expiredDate">Caducidad</label>
+                <input type="date" name="expiredDate" id="txt_expiredDate" placeholder="Caducidad">
+
+                <label for="flip-2">Activo</label>
+                <select name="status" id="flip-2" data-role="slider">
+                    <option value="0">Activos</option>
+                    <option value="1">Inactivo</option>
+                </select>
+
+                <button type="submit" data-theme="b">Enviar</button>
+            </form>
+            <form>
+                <input data-type="search" id="searchForCollapsibleSet">
+            </form>
+            <div data-role="collapsibleset" data-filter="true" data-inset="true" id="collapsiblesetForFilter"
+                data-input="#searchForCollapsibleSet">
+
+                <% products.forEach((product)=> { %>
+                    <div data-role="collapsible" data-filtertext="<%= product.description %>">
+                        <h1>
+                            <%= product.description %>
+                        </h1>
+                        <ul data-role="listview" data-inset="false">
+                            <li>Codigo de barras:<%= product.barcode %>
+                            </li>
+                            <li>Marca:<%= product.brand %>
+                            </li>
+                            <li>Precio de compra:<%= product.price %>
+                            </li>
+                            <li>Precio de venta:<%= product.cost %>
+                            </li>
+                            <li>Existencias:<%= product.stock %>
+                            </li>
+                            <li>Fecha de caducidad:<%= product.expiredDate %>
+                            </li>
+                            <li>Estatus:<%= product.status %>
+                            </li>
+                            <form action="/api/products/" method="POST">
+                                <a href="/api/products/<%= product.barcode %>" class="ui-btn ui-btn-inline">Editar</a>
+                                <a href="/api/products/delete/<%= product.barcode %>" class="ui-btn ui-btn-inline">Eliminar</a>
+                                
+                            </form>
+                        </ul>
+                    </div>
+                    <% }) %>
+                        </ul>
+            </div>
+            <div data-role="footer">
+                <h5> Developed from Eduardo</h5>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
