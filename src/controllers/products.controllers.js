@@ -5,7 +5,7 @@ const productsController = {};
 export const getAll = (req, res) => {
     ProductDAO.getAll()
         .then(products => {
-            res.render('../src/views/index.ejs', { products }); // Aquí se pasa un objeto con la propiedad 'products'
+            res.json({ products });
         })
         .catch(err => res.json({
             status: "Server unavailable"
@@ -17,7 +17,7 @@ export const getOne = (req, res) => {
     ProductDAO.getOne(barcode)
         .then(product => {
             if (product) {
-                res.render("../src/views/edit.ejs", {  product   });
+                res.json({ product });
             } else {
                 res.json({
                     status: "Product not found"
@@ -31,7 +31,7 @@ export const getOne = (req, res) => {
 
 export const insertOne = (req, res) => {
     ProductDAO.insertOne(req.body)
-        .then(result => res.redirect('/api/products/'))
+        .then(result => res.json({ result }))
         .catch(err => res.json({
             status: "Server unavailable"
         }));
@@ -43,7 +43,7 @@ export const updateOne = (req, res) => {
     ProductDAO.updateOne(barcode, product)
         .then(result => {
             if (result) {
-                res.redirect("/api/products/");
+                res.json({ result });
             } else {
                 res.json({
                     status: "Product not found"
@@ -60,13 +60,14 @@ export const deleteOne = (req, res) => {
     ProductDAO.deleteOne(barcode)
       .then(result => {
         if (result) {
-            res.redirect("/api/products/");
-    } else {
-        res.json({
-            status: "Product not found"
-        });
-    }})
+            res.json({ result });
+        } else {
+            res.json({
+                status: "Product not found"
+            });
+        }
+    })
       .catch(err => res.json({
             status: "Server unavailable"
-        }));
+        }));
 };
